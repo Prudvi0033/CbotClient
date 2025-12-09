@@ -4,15 +4,17 @@ import { motion } from "framer-motion";
 
 interface BotI {
   strokeColor: string;
+  height: number,
+  width: number
 }
 
-const AnimatedBot: React.FC<BotI> = ({ strokeColor }) => {
+const AnimatedBot: React.FC<BotI> = ({ strokeColor, height, width }) => {
   return (
     <div className="flex items-center justify-center">
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="100"
-        height="100"
+        width={width}
+        height={height}
         viewBox="0 0 24 24"
         fill="none"
         stroke={strokeColor}

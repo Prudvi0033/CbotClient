@@ -10,7 +10,7 @@ const Home = () => {
     <div className="flex items-center justify-around min-h-screen">
       <div className="h-screen w-[50%]  p-2 hidden md:block">
         <div className="h-full w-full rounded-lg bg-linear-to-br from-orange-800 via-orange-500 to-orange-300 flex items-center justify-center backdrop-blur-3xl p-4">
-          <AnimatedBot strokeColor="white" />
+          <AnimatedBot strokeColor="white" height={100} width={100} />
         </div>
       </div>
 
