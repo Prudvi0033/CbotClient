@@ -1,9 +1,9 @@
 "use client";
 import { useState } from "react";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
-import { axiosInstace } from "../lib/axios";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import { axiosInstance } from "../lib/axios";
 
 export interface SignupProps {
   switchPage: () => void;
@@ -30,7 +30,7 @@ export default function SignUp({ switchPage }: SignupProps) {
 
     setLoading(true);
     try {
-      const res = await axiosInstace.post("/auth/sign-up", signup);
+      const res = await axiosInstance.post("/auth/sign-up", signup);
       localStorage.setItem("token", res.data.token);
       router.push("/dashboard");
     } catch (error) {

@@ -1,9 +1,9 @@
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 import React, { useState } from "react";
 import { SignupProps } from "./Signup";
-import { axiosInstace } from "../lib/axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { axiosInstance } from "../lib/axios";
 
 const Login = ({ switchPage }: SignupProps) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -22,7 +22,7 @@ const Login = ({ switchPage }: SignupProps) => {
 
     setLoading(true);
     try {
-      const res = await axiosInstace.post("/auth/login", login);
+      const res = await axiosInstance.post("/auth/login", login);
       localStorage.setItem("token", res.data.token);
       router.push("/dashboard");
     } catch (error) {
