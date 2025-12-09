@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { ToastContainer } from "react-toastify";
 
 
 export const metadata: Metadata = {
@@ -23,6 +24,7 @@ export default function RootLayout({
         className='space-grotesk antialiased'
       >
         {children}
+        <ToastContainer />
       </body>
     </html>
   );

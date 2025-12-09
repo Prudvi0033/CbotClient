@@ -1,12 +1,24 @@
-import React from 'react'
-import Home from './components/Home'
+"use client";
+import React, { useEffect } from "react";
+import Home from "./components/Home";
+import { useRouter } from "next/navigation";
 
-const page = () => {
+const Page = () => {
+  const router = useRouter();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if(token){
+      router.push("/dashboard");
+    }
+  }, [router]);
+
   return (
     <div>
-      <Home/>
+      <Home />
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default Page;

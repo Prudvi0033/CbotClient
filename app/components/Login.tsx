@@ -1,18 +1,37 @@
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
 import React, { useState } from "react";
 import { SignupProps } from "./Signup";
+import { axiosInstace } from "../lib/axios";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 const Login = ({ switchPage }: SignupProps) => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
   const [login, setLogin] = useState({
     phone: "",
-    password: ""
-  })
+    password: "",
+  });
 
-  const handleLogin = () => {
-    setLoading(true)
-  }
+  const handleLogin = async () => {
+    if (!login.phone || !login.password) {
+      toast.error("Name, phone, and password are required.");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const res = await axiosInstace.post("/auth/login", login);
+      localStorage.setItem("token", res.data.token);
+      router.push("/dashboard");
+    } catch (error) {
+      console.log("Error in signup", error);
+      toast.error("Login Failed");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="h-screen flex flex-col items-center justify-center">
@@ -23,7 +42,7 @@ const Login = ({ switchPage }: SignupProps) => {
               Welcome back
             </h1>
             <p className="text-gray-600 text-sm">
-              Sign in to your account to continue
+              Login in to your account to continue
             </p>
           </div>
 
@@ -37,7 +56,9 @@ const Login = ({ switchPage }: SignupProps) => {
                 maxLength={10}
                 name="phone"
                 value={login.phone}
-                onChange={(e) => setLogin(prev => ({...prev, phone: e.target.value}))}
+                onChange={(e) =>
+                  setLogin((prev) => ({ ...prev, phone: e.target.value }))
+                }
                 placeholder="+1 000-000-0000"
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
               />
@@ -53,7 +74,9 @@ const Login = ({ switchPage }: SignupProps) => {
                   name="password"
                   placeholder="••••••••"
                   value={login.password}
-                onChange={(e) => setLogin(prev => ({...prev, password: e.target.value}))}
+                  onChange={(e) =>
+                    setLogin((prev) => ({ ...prev, password: e.target.value }))
+                  }
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 pr-10"
                 />
                 <button
@@ -66,11 +89,18 @@ const Login = ({ switchPage }: SignupProps) => {
             </div>
 
             <button
-            onClick={handleLogin}
+              onClick={handleLogin}
               disabled={loading}
-              className="w-full bg-black shadow-[inset_4px_4px_8px_rgba(255,255,255,0.3),inset_-4px_-6px_10px_rgba(255,255,255,0.4),2px_6px_14px_rgba(0,0,0,0.3)] text-white font-semibold py-2 rounded-lg transition mt-6 disabled:opacity-50 cursor-pointer hover:scale-[99%]"
+              className="w-full bg-black shadow-[inset_6px_4px_12px_rgba(255,255,255,0.6),inset_-4px_-6px_8px_rgba(255,255,255,0.3),2px_6px_10px_rgba(0,0,0,0.2)] text-white font-semibold py-2 rounded-lg transition mt-6 disabled:opacity-50 hover:scale-[99%]
+             flex items-center justify-center"
             >
-              {loading ? "Signing in..." : "Sign In"}
+              {loading ? (
+                <span className="flex items-center justify-center">
+                  <Loader2 className="animate-spin text-white" />
+                </span>
+              ) : (
+                "Login"
+              )}
             </button>
           </div>
 
