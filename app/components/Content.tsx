@@ -12,8 +12,10 @@ import Categories from "./Categories";
 const Content = ({ data, userName, loading }) => {
   const bottomRef = React.useRef<HTMLDivElement | null>(null);
   React.useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [data]);
+    if (!loading) {
+      bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [data, loading]);
 
   return (
     <div className="flex-1 overflow-y-auto p-4 space-y-6">
@@ -73,9 +75,7 @@ const Content = ({ data, userName, loading }) => {
                   <Payments payments={item.data.data} />
                 )}
                 {item.section === "categories" && (
-                  <Categories
-                    categories={item.data.data}
-                  />
+                  <Categories categories={item.data.data} />
                 )}
                 {item.section === "products" && (
                   <Products products={item.data.data} />

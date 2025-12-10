@@ -8,15 +8,24 @@ import Content from "./Content";
 import { axiosInstance } from "../lib/axios";
 import { extractIntent } from "../lib/nlp";
 import { useCategoryStore } from "../store/useCategoryStore";
+import { useRouter } from "next/navigation";
 
 const Dashboard = () => {
   const [menu, setMenu] = useState(true);
   const [username, setUsername] = useState(null);
   const [loading, setLoading] = useState(false);
+  const router = useRouter()
 
   const [contentData, setContentData] = useState([]);
   const [message, setMessage] = useState("");
   const selectedCategory = useCategoryStore((state) => state.selectedCategory);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+    if(!token){
+      router.push("/")
+    }
+  }, [])
 
   useEffect(() => {
     (async () => {
@@ -42,11 +51,14 @@ const Dashboard = () => {
 
   async function getProductsByCategory(category: string) {
     try {
+      
       const res = await axiosInstance.post("/chat/send", { text: category });
       setContentData((prev) => [
         ...prev,
         { section: "products", data: res.data, timestamp: Date.now() },
       ]);
+      await new Promise((resolve) => setTimeout(resolve, 400));
+      setLoading(true)
     } catch (error) {
       console.log("Error in getting products", error);
     } finally {
@@ -54,13 +66,14 @@ const Dashboard = () => {
     }
   }
 
-  const handleData = (section: string, data: any) => {
+  const handleData = async (section: string, data: any) => {
     try {
-      setLoading(true);
       setContentData((prev) => [
         ...prev,
         { section, data, timestamp: Date.now() },
       ]);
+      setLoading(true);
+      await new Promise((resolve) => setTimeout(resolve, 400));
     } catch (error) {
       console.log("Error in getting data from menu", error);
     } finally {
@@ -74,7 +87,7 @@ const Dashboard = () => {
         ...prev,
         { section: "userMessage", data: { text: msg }, timestamp: Date.now() },
       ]);
-
+      await new Promise((resolve) => setTimeout(resolve, 400));
       setLoading(true);
 
       const section = extractIntent(msg);
