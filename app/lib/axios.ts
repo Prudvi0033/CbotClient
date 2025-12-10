@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BACKEND_URL || 'https://cbot-olive.vercel.app/api',
-  withCredentials: false,
+  withCredentials: true,
 });
 
 axiosInstance.interceptors.request.use(
