@@ -33,7 +33,7 @@ const Orders: React.FC<OrdersProps> = ({ orders }) => {
                     fill="url(#bp1q9d83ml6-1752500502795-7643734_location_existing_0_3hck3s8is)"
                     data-glass="clone"
                     filter="url(#bp1q9d83ml6-1752500502795-7643734_location_filter_ppvzl22s3)"
-                    clip-path="url(#bp1q9d83ml6-1752500502795-7643734_location_clipPath_8jsp4u6i9)"
+                    clipPath="url(#bp1q9d83ml6-1752500502795-7643734_location_clipPath_8jsp4u6i9)"
                   ></path>
                   <path
                     d="M12 1C15.8041 1 19.9998 3.68995 20 8.59375C20 11.8252 18.0301 14.6669 16.2344 16.6074C15.3187 17.5969 14.4053 18.3973 13.7227 18.9502C13.5202 19.1142 13.3124 19.2741 13.1016 19.4307C12.4477 19.9161 11.5522 19.9163 10.8984 19.4307C10.6887 19.2749 10.4813 19.1154 10.2773 18.9502C9.59466 18.3973 8.68128 17.5969 7.76562 16.6074C5.96987 14.6669 4 11.8252 4 8.59375C4.00016 3.68995 8.1959 1 12 1ZM12 5C9.79086 5 8 6.79086 8 9C8 11.2091 9.79086 13 12 13C14.2091 13 16 11.2091 16 9C16 6.79086 14.2091 5 12 5Z"
@@ -54,12 +54,12 @@ const Orders: React.FC<OrdersProps> = ({ orders }) => {
                       gradientUnits="userSpaceOnUse"
                     >
                       <stop
-                        stop-color="rgba(87, 87, 87, 1)"
+                        stopColor="rgba(87, 87, 87, 1)"
                         data-glass-11="on"
                       ></stop>
                       <stop
                         offset="1"
-                        stop-color="rgba(21, 21, 21, 1)"
+                        stopColor="rgba(21, 21, 21, 1)"
                         data-glass-12="on"
                       ></stop>
                     </linearGradient>
@@ -72,12 +72,12 @@ const Orders: React.FC<OrdersProps> = ({ orders }) => {
                       gradientUnits="userSpaceOnUse"
                     >
                       <stop
-                        stop-color="rgba(227, 227, 229, 0.6)"
+                        stopColor="rgba(227, 227, 229, 0.6)"
                         data-glass-21="on"
                       ></stop>
                       <stop
                         offset="1"
-                        stop-color="rgba(187, 187, 192, 0.6)"
+                        stopColor="rgba(187, 187, 192, 0.6)"
                         data-glass-22="on"
                       ></stop>
                     </linearGradient>
@@ -90,13 +90,13 @@ const Orders: React.FC<OrdersProps> = ({ orders }) => {
                       gradientUnits="userSpaceOnUse"
                     >
                       <stop
-                        stop-color="rgba(255, 255, 255, 1)"
+                        stopColor="rgba(255, 255, 255, 1)"
                         data-glass-light="on"
                       ></stop>
                       <stop
                         offset="1"
-                        stop-color="rgba(255, 255, 255, 1)"
-                        stop-opacity="0"
+                        stopColor="rgba(255, 255, 255, 1)"
+                        stopOpacity="0"
                         data-glass-light="on"
                       ></stop>
                     </linearGradient>

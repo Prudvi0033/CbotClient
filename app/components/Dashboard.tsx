@@ -7,6 +7,7 @@ import MenuDeck from "./MenuDeck";
 import Content from "./Content";
 import { axiosInstance } from "../lib/axios";
 import { extractIntent } from "../lib/nlp";
+import { useCategoryStore } from "../store/useCategoryStore";
 
 const Dashboard = () => {
   const [menu, setMenu] = useState(true);
@@ -15,6 +16,7 @@ const Dashboard = () => {
 
   const [contentData, setContentData] = useState([]);
   const [message, setMessage] = useState("");
+  const selectedCategory = useCategoryStore((state) => state.selectedCategory);
 
   useEffect(() => {
     (async () => {
@@ -30,6 +32,27 @@ const Dashboard = () => {
       }
     })();
   }, []);
+
+  useEffect(() => {
+    if (selectedCategory) {
+      console.log(selectedCategory);
+      getProductsByCategory(selectedCategory);
+    }
+  }, [selectedCategory]);
+
+  async function getProductsByCategory(category: string) {
+    try {
+      const res = await axiosInstance.post("/chat/send", { text: category });
+      setContentData((prev) => [
+        ...prev,
+        { section: "products", data: res.data, timestamp: Date.now() },
+      ]);
+    } catch (error) {
+      console.log("Error in getting products", error);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   const handleData = (section: string, data: any) => {
     try {
@@ -57,8 +80,6 @@ const Dashboard = () => {
       const section = extractIntent(msg);
       const res = await axiosInstance.post("/chat/send", { text: msg });
       const data = res.data;
-      console.log(data);
-
       setContentData((prev) => [
         ...prev,
         { section, data, timestamp: Date.now() },
@@ -84,14 +105,14 @@ const Dashboard = () => {
 
         <Header />
 
-        {/* Pass all accumulated data */}
         <Content data={contentData} userName={username} loading={loading} />
         <div className="py-11"></div>
 
         {/* Input box */}
         <div className="w-full absolute bottom-0 p-4 flex justify-center">
-          <div className="flex w-[98%] items-center gap-2">
+          <div className="flex w-[98%] relative items-center gap-2">
             <textarea
+              value={message}
               onChange={(e) => setMessage(e.target.value)}
               onKeyDown={(e) => {
                 if (e.key === "Enter" && !e.shiftKey) {
@@ -110,9 +131,9 @@ const Dashboard = () => {
             <button
               onClick={sendMessage}
               disabled={!message.trim()}
-              className="h-16 flex items-center justify-center w-16 px-4 bg-black text-white rounded-full shadow-[inset_2px_2px_12px_rgba(255,255,255,0.6),inset_-4px_-6px_8px_rgba(255,255,255,0.3),2px_6px_10px_rgba(0,0,0,0.2)] hover:scale-[99%] disabled:opacity-50 disabled:cursor-not-allowed"
+              className="h-10 w-10 right-2 p-0.5 absolute flex items-center justify-center bg-neutral-900 text-white rounded-full shadow-[inset_2px_2px_6px_rgba(255,255,255,0.4),inset_-4px_-6px_12px_rgba(255,255,255,0.2),2px_6px_10px_rgba(0,0,0,0.2)] disabled:cursor-not-allowed"
             >
-              <ArrowUpRight size={32} />
+              <ArrowUpRight size={24} />
             </button>
           </div>
         </div>
