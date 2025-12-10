@@ -8,7 +8,7 @@ interface DealsProps {
 
 const Deals: React.FC<DealsProps> = ({ products }) => {
   return (
-    <div className="grid grid-cols-1 gap-4">
+    <div className="grid grid-cols-1 gap-4 px-2">
       {products.map((prod, idx) => (
         <div
           key={idx}
