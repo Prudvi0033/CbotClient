@@ -6,6 +6,13 @@ interface PaymentsProps {
 }
 
 const Payments: React.FC<PaymentsProps> = ({ payments }) => {
+  if (payments.length === 0) {
+    return (
+      <div className="text-center shadow-md flex px-2 bg-neutral-200 rounded-md w-fit ">
+        <p className="text-black text-sm p-3">No payments yet..</p>
+      </div>
+    );
+  }
   return (
     <div className="grid grid-cols-1 gap-3 px-2">
       {payments.map((payment) => (

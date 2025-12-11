@@ -28,6 +28,11 @@ export default function SignUp({ switchPage }: SignupProps) {
       return;
     }
 
+    if(signup.phone.length !== 10){
+      toast.error("Phone number must be 10 digits");
+      return;
+    }
+
     setLoading(true);
     try {
       const res = await axiosInstance.post("/auth/sign-up", signup);
